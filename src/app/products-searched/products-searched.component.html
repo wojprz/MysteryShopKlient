@@ -1,0 +1,33 @@
+<div class="list-group">
+  <div *ngFor="let event of products">
+  <a href="/product-detail/{{event.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1"></h5>
+        <small>{{event.dateOfAddition | date:"dd/MM/yyyy 'at' HH:mm"}}</small>
+      </div>
+      <p class="mb-1">{{event.title}}</p>
+      <small>Added by: <a href="/profile/{{event.user.id}}">{{event.user.login}}</a></small>
+    </a>
+     <div *ngIf="event.user.id == helpers.localStorageItem('UserID')">
+        <button (click)='remove(event.id)'>Delete</button>
+      </div>
+    </div>
+    <div class="row col-md-5">
+    <div aria-label="..." class="mx-auto">
+      <ul class="pagination">
+        <li class="page-item">
+          <button class="page-link" *ngIf="currentPage!=1" (click)='getProducts(currentPage-1)'>{{currentPage-1}}</button>
+        </li>
+        <li class="page-item active">
+          <button class="page-link">{{currentPage}}</button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" (click)='getProducts(currentPage+1)'>{{currentPage+1}}</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)='getProducts(currentPage+2)' *ngIf="currentPage==1">{{currentPage+2}}</button>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>

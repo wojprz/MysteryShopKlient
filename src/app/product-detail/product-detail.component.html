@@ -1,0 +1,80 @@
+<div *ngIf="product">
+ <!-- <img src="http://localhost:63819/api/Images/{{service.ImageName}}" class="img img-rounded img-fluid float-left"/> -->
+      <div class="col-md-12">
+          <h1>{{product.title}}</h1>
+          <h5>{{product.price}}$   <a class="button" href="buypage/{{product.user.id}}">BUY</a></h5>
+          <p>{{product.description}}</p>
+      <span class="badge">Added: {{product.dateOfAddition | date:'dd.MM.yyyy'}} by <a href="/profile/{{product.user.id}}">{{product.user.login}}</a></span>
+      <br/>
+      <div *ngIf="_auth.loggedIn()">
+      <h3 class="bold padding-bottom-7">Score: <small>{{product.rating.avarageOfVotes}} / 5 (Votes: {{product.rating.numberOfVotes}})</small></h3>
+        <button type="button" (click)='vote(1)' class="btn btn-danger btn-sm" aria-label="Left Align">
+          <span class="glyphicon glyphicon-star" aria-hidden="true">1</span>
+        </button>
+        <button type="button" (click)='vote(2)' class="btn btn-danger btn-sm" aria-label="Left Align">
+          <span class="glyphicon glyphicon-star" aria-hidden="true">2</span>
+        </button>
+        <button type="button" (click)='vote(3)' class="btn btn-warning btn-sm" aria-label="Left Align">
+          <span class="glyphicon glyphicon-star" aria-hidden="true">3</span>
+        </button>
+        <button type="button" (click)='vote(4)' class="btn btn-warning btn-sm" aria-label="Left Align">
+          <span class="glyphicon glyphicon-star" aria-hidden="true">4</span>
+        </button>
+        <button type="button" (click)='vote(5)' class="btn btn-success btn-sm" aria-label="Left Align">
+          <span class="glyphicon glyphicon-star" aria-hidden="true">5</span>
+        </button>
+        </div>
+    </div>
+    <br><br><br><br>
+    <div class id="serviceDetailError" class="error"></div>
+    <div class="mt-5 col-sm-10">
+    <div *ngIf="!_auth.loggedIn()">
+      Voting and commenting only aviable for loged in users!
+    </div>
+    <div *ngIf="_auth.loggedIn()">
+    Comment:
+      <form>
+      <textarea class="form-control" onfocus="this.value=''" ref-textarea name="commentData" id="addComment" rows="3"></textarea>
+      <button (click)='addNewComment(textarea.value)' class="btn btn-success float-right">Add</button>
+      </form>
+  </div>
+</div>
+<br><br>
+<div class="col-md-10">
+<div class="card">
+  <div *ngFor="let comment of comments">
+    <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <span class="small text-muted float-right">{{comment.dateOfAddition | date:"dd/MM/yyyy 'at' HH:mm"}}</span>
+            <p>
+             <a class="float-left" href="/profile/{{comment.user.id}}"><strong>{{comment.user.login}}</strong></a>
+            </p>
+            <div class="clearfix"></div>
+            <p>{{comment.content}}</p>
+          </div>
+    </div>
+  </div>
+    <hr>
+  </div>
+</div>
+</div>
+<div class="row col-md-5">
+  <div aria-label="..." class="mx-auto">
+    <ul class="pagination">
+      <li class="page-item">
+        <button class="page-link" *ngIf="currentPage!=1" (click)='getComments(currentPage-1)'>{{currentPage-1}}</button>
+      </li>
+      <li class="page-item active">
+        <button class="page-link">{{currentPage}}</button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" (click)='getComments(currentPage+1)'>{{currentPage+1}}</button>
+      </li>
+      <li class="page-item">
+          <button class="page-link" (click)='getComments(currentPage+2)' *ngIf="currentPage==1">{{currentPage+2}}</button>
+        </li>
+    </ul>
+  </div>
+</div>
+</div>

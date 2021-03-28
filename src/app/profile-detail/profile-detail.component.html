@@ -1,0 +1,101 @@
+<div *ngIf="!_auth.loggedIn()">
+  <br>
+    You have to be logged in to see users profile!
+    <a href="/login">Log In</a>.
+    Don't have an account yet?
+    <a href="/register">Sign Up</a>
+  </div>
+
+  <div *ngIf="_auth.loggedIn()">
+<div *ngIf="user">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title">User login: {{user.login}}</p>
+        <p class="card-title">User name: {{user.name}}</p>
+        <p class="card-title">User surname: {{user.surname}}</p>
+        <p class="card-title">User email: {{user.email}}
+        <!--  <button (click)='changeEmail()'></button>
+          <input id="newEmail" *ngIf="user.id == helpers.localStorageItem('UserID')" [(ngModel)]="userData.email" class="float-right" placeholder="New email"/> -->
+        </p>
+
+      </div>
+      <div class="card-footer text-muted">
+       <!-- Data utworzenia: {{user.Created_at | date:'dd.MM.yyyy'}} -->
+      </div>
+    </div>
+</div>
+</div>
+<div class="list-group">
+  <div *ngFor="let event of products">
+  <a href="/product-detail/{{event.id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1"></h5>
+        <small>{{event.dateOfAddition | date:"dd/MM/yyyy 'at' HH:mm"}}</small>
+      </div>
+      <p class="mb-1">{{event.title}} - Price: {{event.price}}$</p>
+      <div class="float-right">Rating: {{event.rating.avarageOfVotes}} / 5</div>
+      <small>Added by: <a href="/profile/{{event.user.id}}">{{event.user.login}}</a></small>
+    </a>
+     <div *ngIf="event.user.id == helpers.localStorageItem('UserID')">
+        <button (click)='remove(event.id)'>Delete</button>
+      </div>
+    </div>
+    <div class="row col-md-5">
+    <div aria-label="..." class="mx-auto">
+      <ul class="pagination">
+        <li class="page-item">
+          <button class="page-link" *ngIf="currentPage!=1" (click)='getProducts(currentPage-1)'>{{currentPage-1}}</button>
+        </li>
+        <li class="page-item active">
+          <button class="page-link">{{currentPage}}</button>
+        </li>
+        <li class="page-item">
+          <button class="page-link" (click)='getProducts(currentPage+1)'>{{currentPage+1}}</button>
+        </li>
+        <li class="page-item">
+            <button class="page-link" (click)='getProducts(currentPage+2)' *ngIf="currentPage==1">{{currentPage+2}}</button>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+<br><br>
+<div class="list-group">
+<div class="card">
+  <div *ngFor="let comment of comments">
+    <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <span class="small text-muted float-right">{{comment.dateOfAddition | date:"dd/MM/yyyy 'at' HH:mm"}}</span>
+            <p>
+             <a class="float-left" href="/profile/{{comment.user.id}}"><strong>{{comment.user.login}}</strong></a>
+            </p>
+            <div class="clearfix"></div>
+            <p>{{comment.content}}</p>
+          </div>
+    </div>
+  </div>
+    <hr>
+  </div>
+
+
+<div class="row col-md-5">
+  <div aria-label="..." class="mx-auto">
+    <ul class="pagination">
+      <li class="page-item">
+        <button class="page-link" *ngIf="currentPage!=1" (click)='getComments(currentPage-1)'>{{currentPageForComment-1}}</button>
+      </li>
+      <li class="page-item active">
+        <button class="page-link">{{currentPageForComment}}</button>
+      </li>
+      <li class="page-item">
+        <button class="page-link" (click)='getComments(currentPage+1)'>{{currentPageForComment+1}}</button>
+      </li>
+      <li class="page-item">
+          <button class="page-link" (click)='getComments(currentPage+2)' *ngIf="currentPage==1">{{currentPageForComment+2}}</button>
+        </li>
+    </ul>
+  </div>

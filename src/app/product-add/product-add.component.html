@@ -1,0 +1,44 @@
+<div *ngIf="!_auth.loggedIn()">
+  <br>
+    You have to be logged in!
+    <a href="/login">Sign in</a>.
+    Don't have an account yet?
+    <a href="/register">Sign up now!</a>
+  </div>
+
+
+  <div *ngIf="_auth.loggedIn()" class="py-5">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <span class="anchor" id="formService"></span>
+
+
+        <div class="card rounded-0">
+          <div class="card-header">
+            <h3 class="mb-0">Adding new product</h3>
+          </div>
+          <div class="card-body">
+            <form class="form">
+              <div class="form-group">
+                <label>Product title</label>
+                  <div class="form-group">
+                <input id="serviceName" type="text" class="form-control rounded-0" [(ngModel)]="productData.Title" name="Title" required>
+                </div>
+                <label>Product descryption</label>
+                <input id="serviceDesc" type="text" class="form-control rounded-0" [(ngModel)]="productData.Descryption" name="Descryption" required>
+              </div>
+              <label>Price</label>
+                  <div class="form-group">
+                <input id="productPrice" type="number" class="form-control rounded-0" [(ngModel)]="productData.Price" name="Price" required>
+                </div>
+              <div class="error"  id="error"></div>
+              <button type="button" (click)="addNewProduct()" class="btn btn-success float-right">Add</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>

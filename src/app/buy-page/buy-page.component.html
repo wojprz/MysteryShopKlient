@@ -1,0 +1,25 @@
+<div *ngIf="!_auth.loggedIn()">
+  <br>
+    You have to be logged in to see buy details!
+    <a href="/login">Log In</a>.
+    Don't have an account yet?
+    <a href="/register">Sign Up</a>
+  </div>
+
+  <div *ngIf="_auth.loggedIn()">
+<div *ngIf="user">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title">If you want to buy this mystery box contact the seller via email provided belove.</p>
+        <p class="card-title">User login: {{user.login}}</p>
+        <p class="card-title">User email: {{user.email}}
+
+        </p>
+
+      </div>
+      <div class="card-footer text-muted">
+
+      </div>
+    </div>
+</div>
+</div>
